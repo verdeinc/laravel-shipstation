@@ -94,7 +94,7 @@ class ShipStation
      *
      * @param  array  $options
      * @param  string  $endpoint
-     * @return \stdClass
+     * @return \stdClass|ResponseInterface
      */
     public function get($options = [], $endpoint = '')
     {
@@ -114,7 +114,7 @@ class ShipStation
      *
      * @param  array  $options
      * @param  string  $endpoint
-     * @return \stdClass
+     * @return \stdClass|ResponseInterface
      */
     public function post($options = [], $endpoint = '')
     {
@@ -133,7 +133,7 @@ class ShipStation
      * Delete a resource using the assigned endpoint ($this->endpoint).
      *
      * @param  string  $endpoint
-     * @return \stdClass
+     * @return \stdClass|ResponseInterface
      */
     public function delete($endpoint = '')
     {
@@ -153,7 +153,7 @@ class ShipStation
      *
      * @param  array  $options
      * @param  string  $endpoint
-     * @return \stdClass
+     * @return \stdClass|ResponseInterface
      */
     public function update($options = [], $endpoint = '')
     {
