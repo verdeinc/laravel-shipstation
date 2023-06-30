@@ -53,7 +53,7 @@ class ShipStation
     private $disableRateLimiting = false;
 
     /** @var bool */
-    private $debug = false;
+    private $debugMode = false;
 
     /**
      * ShipStation constructor.
@@ -86,7 +86,7 @@ class ShipStation
         ]);
 
         $this->disableRateLimiting = $disableRateLimiting;
-        $this->debug = $debug;
+        $this->debugMode = $debug;
     }
 
     /**
@@ -103,7 +103,7 @@ class ShipStation
         if (!$this->disableRateLimiting)
             $this->sleepIfRateLimited($response);
 
-        if ($this->debug)
+        if ($this->debugMode)
             return $response;
 
         return json_decode($response->getBody()->getContents());
@@ -123,7 +123,7 @@ class ShipStation
         if (!$this->disableRateLimiting)
             $this->sleepIfRateLimited($response);
 
-        if ($this->debug)
+        if ($this->debugMode)
             return $response;
 
         return json_decode($response->getBody()->getContents());
@@ -142,7 +142,7 @@ class ShipStation
         if (!$this->disableRateLimiting)
             $this->sleepIfRateLimited($response);
 
-        if ($this->debug)
+        if ($this->debugMode)
             return $response;
 
         return json_decode($response->getBody()->getContents());
@@ -162,7 +162,7 @@ class ShipStation
         if (!$this->disableRateLimiting)
             $this->sleepIfRateLimited($response);
 
-        if ($this->debug)
+        if ($this->debugMode)
             return $response;
 
         return json_decode($response->getBody()->getContents());
