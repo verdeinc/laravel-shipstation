@@ -49,6 +49,12 @@ class ShipStation
     /** @var int */
     private $secondsUntilReset = 0;
 
+    /** @var bool */
+    private $disableRateLimiting = false;
+
+    /** @var bool */
+    private $debug = false;
+
     /**
      * ShipStation constructor.
      *
@@ -58,7 +64,7 @@ class ShipStation
      * @param  string|null  $partnerApiKey
      * @throws \Exception
      */
-    public function __construct($apiKey, $apiSecret, $apiURL, $partnerApiKey = null)
+    public function __construct($apiKey, $apiSecret, $apiURL, $partnerApiKey = null, $disableRateLimiting = false, $debug = false)
     {
         if (! isset($apiKey, $apiSecret)) {
             throw new \Exception('Your API key and/or private key are not set. Did you run artisan vendor:publish?');
@@ -78,6 +84,9 @@ class ShipStation
             'base_uri' => $this->base_uri,
             'headers'  => $headers,
         ]);
+
+        $this->disableRateLimiting = $disableRateLimiting;
+        $this->debug = $debug;
     }
 
     /**
@@ -91,7 +100,11 @@ class ShipStation
     {
         $response = $this->client->request('GET', "{$this->endpoint}{$endpoint}", ['query' => $options]);
 
-        $this->sleepIfRateLimited($response);
+        if (!$this->disableRateLimiting)
+            $this->sleepIfRateLimited($response);
+
+        if ($this->debug)
+            return $response;
 
         return json_decode($response->getBody()->getContents());
     }
@@ -107,7 +120,11 @@ class ShipStation
     {
         $response = $this->client->request('POST', "{$this->endpoint}{$endpoint}", ['json' => $options]);
 
-        $this->sleepIfRateLimited($response);
+        if (!$this->disableRateLimiting)
+            $this->sleepIfRateLimited($response);
+
+        if ($this->debug)
+            return $response;
 
         return json_decode($response->getBody()->getContents());
     }
@@ -122,7 +139,11 @@ class ShipStation
     {
         $response = $this->client->request('DELETE', "{$this->endpoint}{$endpoint}");
 
-        $this->sleepIfRateLimited($response);
+        if (!$this->disableRateLimiting)
+            $this->sleepIfRateLimited($response);
+
+        if ($this->debug)
+            return $response;
 
         return json_decode($response->getBody()->getContents());
     }
@@ -138,7 +159,11 @@ class ShipStation
     {
         $response = $this->client->request('PUT', "{$this->endpoint}{$endpoint}", ['json' => $options]);
 
-        $this->sleepIfRateLimited($response);
+        if (!$this->disableRateLimiting)
+            $this->sleepIfRateLimited($response);
+
+        if ($this->debug)
+            return $response;
 
         return json_decode($response->getBody()->getContents());
     }
